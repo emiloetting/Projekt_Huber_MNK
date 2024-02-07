@@ -1,8 +1,8 @@
 from Board import Board                                            
 from Player import Player
-from MyBotRandoms import MyBotRandom
-from MyBotReactive import MyBotReactive
-from MyBotRandoms import MyBot2
+from Bot_Random import Bot_Random
+from Bot_HighLevel import Bot_HighLevel
+from Bot_LowLevel import Bot_LowLevel
 
 class Game:
     def __init__(self, m=5, n=5, k=4, player1=None, player2=None):                                                              
@@ -29,7 +29,7 @@ class Game:
                 bot_level = input(">>> ")                                                              
                 if bot_level == "1": 
                     self.player1 = Player(name=input("Spielername: "), number=1)                                                                  
-                    self.player2 = MyBotRandom(number=2)                                               
+                    self.player2 = Bot_Random(number=2)                                               
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -43,7 +43,7 @@ class Game:
                     self.game_loop()                                                                   
                 elif bot_level == "2":      
                     self.player1 = Player(name=input("Spielername: "), number=1)                                                                 
-                    self.player2 = MyBot2(number=2)                                             
+                    self.player2 = Bot_LowLevel(number=2)                                             
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -57,7 +57,7 @@ class Game:
                     self.game_loop()                                                                    
                 elif bot_level == "3":
                     self.player1 = Player(name=input("Spielername: "), number=1)               
-                    self.player2 = MyBotReactive(number=2)                                                     
+                    self.player2 = Bot_HighLevel(number=2)                                                     
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -75,7 +75,7 @@ class Game:
                 bot_level = input(">>> ")                                                              
                 if bot_level == "1": 
                     self.player2 = Player(name=input("Spielername: "), number=2)                                                                  
-                    self.player1 = MyBotRandom(number=1)                                               
+                    self.player1 = Bot_Random(number=1)                                               
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -89,7 +89,7 @@ class Game:
                     self.game_loop()                                                                   
                 elif bot_level == "2":      
                     self.player2 = Player(name=input("Spielername: "), number=2)                                                                 
-                    self.player1 = MyBot2(number=1)                                             
+                    self.player1 = Bot_LowLevel(number=1)                                             
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -103,7 +103,7 @@ class Game:
                     self.game_loop()                                                                    
                 elif bot_level == "3":
                     self.player2 = Player(name=input("Spielername: "), number=2)               
-                    self.player1 = MyBotReactive(number=1)                                                     
+                    self.player1 = Bot_HighLevel(number=1)                                                     
                     print()
                     print(
                         "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
@@ -175,7 +175,7 @@ def game_sim(number):
     count_bot_2 = 0
     count_draw = 0
     for i in range(number):
-        game=Game(player1=MyBotRandom(number=1), player2=MyBotReactive(number=2))
+        game=Game(player1=Bot_Random(number=1), player2=Bot_HighLevel(number=2))
         game.game_loop()
         if game.board.has_won_diagonally() or game.board.has_won_horizontally() or game.board.has_won_vertically():
             winner.append(game.board.winner)
