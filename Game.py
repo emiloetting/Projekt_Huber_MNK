@@ -21,53 +21,101 @@ class Game:
             self.player1 = Player(name=input("Name Spieler 1: "), number=1)                             
             self.player2 = Player(name=input("Name Spieler 2: "), number=2)                                                                        
             self.game_loop()                                                                        
-        elif choice == "2":                                                                       
-            print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")                            
-            bot_level = input(">>> ")                                                              
-            if bot_level == "1": 
-                self.player1 = Player(name=input("Name Spieler 1: "), number=1)                                                                  
-                self.player2 = MyBotRandom(number=2)                                               
-                print()
-                print(
-                    "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                    "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                    "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                    "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                    "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                    "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                    "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                    )
-                self.game_loop()                                                                   
-            elif bot_level == "2":      
-                self.player1 = Player(name=input("Name Spieler 1: "), number=1)                                                                 
-                self.player2 = MyBot2(number=2)                                             
-                print()
-                print(
-                    "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                    "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                    "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                    "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                    "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                    "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                    "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                    )
-                self.game_loop()                                                                    
-            elif bot_level == "3":
-                self.player1 = Player(name=input("Name Spieler 1: "), number=1)               
-                self.player2 = MyBotReactive(number=2)                                                     
-                print()
-                print(
-                    "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                    "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                    "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                    "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                    "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                    "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                    "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                    )
-                self.game_loop()                                                                    
-        
+        elif choice == "2":        
+            print("Möchtest du den ersten Zug spielen? Ja [1] / Nein [2]")
+            choice_begin = input(">>> ")
+            if choice_begin == "1":
+                print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")                            
+                bot_level = input(">>> ")                                                              
+                if bot_level == "1": 
+                    self.player1 = Player(name=input("Spielername: "), number=1)                                                                  
+                    self.player2 = MyBotRandom(number=2)                                               
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop()                                                                   
+                elif bot_level == "2":      
+                    self.player1 = Player(name=input("Spielername: "), number=1)                                                                 
+                    self.player2 = MyBot2(number=2)                                             
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop()                                                                    
+                elif bot_level == "3":
+                    self.player1 = Player(name=input("Spielername: "), number=1)               
+                    self.player2 = MyBotReactive(number=2)                                                     
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop() 
 
+            if choice_begin == "2": 
+                print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")                            
+                bot_level = input(">>> ")                                                              
+                if bot_level == "1": 
+                    self.player2 = Player(name=input("Spielername: "), number=2)                                                                  
+                    self.player1 = MyBotRandom(number=1)                                               
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop()                                                                   
+                elif bot_level == "2":      
+                    self.player2 = Player(name=input("Spielername: "), number=2)                                                                 
+                    self.player1 = MyBot2(number=1)                                             
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop()                                                                    
+                elif bot_level == "3":
+                    self.player2 = Player(name=input("Spielername: "), number=2)               
+                    self.player1 = MyBotReactive(number=1)                                                     
+                    print()
+                    print(
+                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
+                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
+                        )
+                    self.game_loop()                                                                                  
+        
     def game_loop(self):        
         '''Startet die Partie
         
@@ -111,7 +159,6 @@ class Game:
 
 game1=Game()
 game1.start()
-
 
 def game_sim(number):
     '''Simuliert Spiele zwischen Bots
