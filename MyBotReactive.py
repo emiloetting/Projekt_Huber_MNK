@@ -2,6 +2,7 @@ from Player import Player
 #from Board import Board
 import numpy as np
 from random import randint
+from random import shuffle
 
 
 class MyBotReactive(Player):                                            
@@ -35,7 +36,8 @@ class MyBotReactive(Player):
                 y_coordinate = 2
                 x_coordinate = 2   
             else:                     
-                all_possible_moves = list(np.argwhere(board.array == 0))         
+                all_possible_moves = list(np.argwhere(board.array == 0))    
+                shuffle(all_possible_moves)     
                 for tupel in all_possible_moves:  
                     if 0 not in tupel and 4 not in tupel:
                         y_coordinate = tupel[0]

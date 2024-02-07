@@ -2,6 +2,7 @@ from Player import Player
 from Board import Board
 import numpy as np
 from random import randint
+from random import shuffle
 
 
 class MyBotRandom(Player):
@@ -48,6 +49,7 @@ class MyBot2(Player):
             x_coordinate = 2   
         else:                     
             all_possible_moves = list(np.argwhere(board.array == 0))         #gibt eine Liste von Tupeln zurück, die alle freien Felder (0) besitzen
+            shuffle(all_possible_moves)
             for tupel in all_possible_moves:  
                 if 0 not in tupel and 4 not in tupel:
                     y_coordinate = tupel[0]
