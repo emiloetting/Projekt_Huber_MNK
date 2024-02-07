@@ -1,25 +1,23 @@
 from Player import Player
-#from Board import Board
 import numpy as np
 from random import randint
 from random import shuffle
 
 
-class MyBotReactive(Player):                                            
+class Bot_HighLevel(Player):                                            
     def __init__(self, number):  
         '''Konstruktur des High-Level-Bots
         
         Eigenschaften umfassen Spielernummer sowie Listen für mögliche Züge, wichtige Züge und gewinnbringende Züge
         '''                                       
         self.number = number
-        self.name = "MyBot3"                                                
+        self.name = "Bot_HighLevel"                                                
         self.possible_moves = []
         self.gefilterte_liste = []
         self.important_moves = []
         self.winning_moves = []
         self.moves_to_get_2_in_a_row = []
                                                                     
-    
     def make_random_move_or_get_two_in_row(self, board):  
         '''Methode, die einen zufälligen Zug macht, wenn es keine wichtigen oder gewinnbringenden Züge gibt.
         
@@ -147,7 +145,6 @@ class MyBotReactive(Player):
                     if board.array[i, j] == 0:
                         self.moves_to_get_2_in_a_row.append((i, j))
             
-
     def check_horizontally(self, board):
         '''Methode, die in Horizontalen nach sinnvollen Zügen sucht.
         
@@ -204,7 +201,6 @@ class MyBotReactive(Player):
                 else:
                     pass
                 
-
     def check_vertically(self, board):     
         '''Methode, die in Vertikalen nach sinnvollen Zügen sucht.
 
@@ -370,7 +366,6 @@ class MyBotReactive(Player):
             else:
                 pass
 
-        
         #Überprüfung der Nebendiagonalen auf...
         for element in range(len(side_diagonals[0])):
             #...eigene Dreierketten
@@ -464,7 +459,6 @@ class MyBotReactive(Player):
                             self.possible_moves.append((element-1, 2, "afmd"))
             else:
                 pass
-        
         
         for element in range(len(side_diagonals[3])):
             if diag_flipped_under_main[element] != 0:
