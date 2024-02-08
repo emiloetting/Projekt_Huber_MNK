@@ -4,6 +4,7 @@ from Bot_Random import Bot_Random
 from Bot_HighLevel import Bot_HighLevel
 from Bot_LowLevel import Bot_LowLevel
 
+
 class Game:
     def __init__(self, m=5, n=5, k=4, player1=None, player2=None):                                                              
         self.m = m                                                                                  
@@ -13,108 +14,88 @@ class Game:
         self.player1 = player1                             
         self.player2 = player2                           
     
-    def start(self): 
-        '''Fragt nach Spielmodus und Spielernamen, startet anschl. das Spiel'''                                                                              
-        print("Willkommen! Wie möchtest du spielen?\nPlayer vs. Player [1] / Player vs. Bot [2]")    
-        choice = input(">>> ")                                                                     
-        if choice == "1":    
-            self.player1 = Player(name=input("Name Spieler 1: "), number=1)                             
-            self.player2 = Player(name=input("Name Spieler 2: "), number=2)                                                                        
-            self.game_loop()                                                                        
-        elif choice == "2":        
+    def print_einleitung(self):
+        print(
+            " \n",
+            "Einleitung:\n",
+            " \n",
+            "Das Spielfeld besteht aus 5x5 Feldern.\n",
+            "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
+            "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
+            "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
+            "Du kannst Werte zwischen 1 und 5 angeben.\n",
+            "Der erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
+            "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
+            "Die Werte dürfen nicht in einer Klammer stehen!\n", 
+            " "
+            )
+
+    def start(self):
+        '''Startet den Initialisierungsprozess eines Spiels
+        
+        Fragt zunächst, welche Art von Partie gewünscht ist (Mensch vs. Bot oder Bot vs. Bot)
+        Anschließend werden je nach Eingabe weitere Methoden zur genaueren Festlegung
+        der SPielparameter ausgeführt'''
+
+        while True:
+            print("Willkommen! Wie möchtest du spielen?\nPlayer vs. Player [1] / Player vs. Bot [2]")    
+            choice_gamemode = input(">>> ")
+            print() 
+            if choice_gamemode == "1":
+                self.start_player_vs_player()
+                break
+            elif choice_gamemode == "2":
+                self.start_player_vs_bot()
+                break
+            else:
+                print("Ungültige Eingabe! Wähle 1 oder 2")
+            
+    def start_player_vs_player(self):
+        '''Startet das Spiel Player vs. Player'''
+        self.player1 = Player(name=input("Name Spieler 1: "), number=1)                             
+        self.player2 = Player(name=input("Name Spieler 2: "), number=2)                                                                                                                                                
+        return self.game_loop()
+    
+    def choose_bot(self, bot_number):
+        '''Legt Bot fest, gegen den gespielt werden soll.'''
+
+        while True:
+            print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")
+            bot_level = input(">>> ")
+            print()
+            if bot_level == "1":
+                return Bot_Random(number=bot_number)
+            elif bot_level == "2":
+                return Bot_LowLevel(number=bot_number)
+            elif bot_level == "3":
+                return Bot_HighLevel(number=bot_number)
+            else:
+                print("Ungültige Eingabe! Wähle 1, 2 oder 3")
+
+    def choose_starter(self):
+        '''Ermöglicht Bestimmung des Startspielers'''
+        while True:
             print("Möchtest du den ersten Zug spielen? Ja [1] / Nein [2]")
             choice_begin = input(">>> ")
+            print()
             if choice_begin == "1":
-                print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")                            
-                bot_level = input(">>> ")                                                              
-                if bot_level == "1": 
-                    self.player1 = Player(name=input("Spielername: "), number=1)                                                                  
-                    self.player2 = Bot_Random(number=2)                                               
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop()                                                                   
-                elif bot_level == "2":      
-                    self.player1 = Player(name=input("Spielername: "), number=1)                                                                 
-                    self.player2 = Bot_LowLevel(number=2)                                             
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop()                                                                    
-                elif bot_level == "3":
-                    self.player1 = Player(name=input("Spielername: "), number=1)               
-                    self.player2 = Bot_HighLevel(number=2)                                                     
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop() 
-
-            if choice_begin == "2": 
-                print("Welches Level soll der Bot haben? Random [1] / Low-Level [2] / High-Level [3]")                            
-                bot_level = input(">>> ")                                                              
-                if bot_level == "1": 
-                    self.player2 = Player(name=input("Spielername: "), number=2)                                                                  
-                    self.player1 = Bot_Random(number=1)                                               
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop()                                                                   
-                elif bot_level == "2":      
-                    self.player2 = Player(name=input("Spielername: "), number=2)                                                                 
-                    self.player1 = Bot_LowLevel(number=1)                                             
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop()                                                                    
-                elif bot_level == "3":
-                    self.player2 = Player(name=input("Spielername: "), number=2)               
-                    self.player1 = Bot_HighLevel(number=1)                                                     
-                    print()
-                    print(
-                        "Einleitung\nDas Spielfeld besteht aus 5x5 Feldern.\n",
-                        "Ein leeres Feld wird durch eine 0 gekennzeichnet, ein belegtes Feld durch eine 1 oder 2.\n",
-                        "Spielt ihr zu zweit, so belegt Spieler 1 das Feld mit einer 1 und Spieler 2 mit einer 2.\n", 
-                        "Spielst du alleine, so legst du automatisch die 1 und der Computer die 2.\n",
-                        "Du kannst Werte zwischen 1 und 5 angeben.\nDer erste Wert beschreibt die Horizontale, der zweite die Vertikale\n",
-                        "Die Eingabe ähnelt der bei 'Schiffe versenken'\n",
-                        "Die Werte dürfen nicht in einer Klammer stehen!\n"
-                        )
-                    self.game_loop()                                                                                  
+                return choice_begin
+            elif choice_begin == "2":
+                return choice_begin
+            else:
+                print("Ungültige Eingabe! Wähle 1 oder 2")
+        
+    def start_player_vs_bot(self):
+        '''Initialisiert Spiel Mensch vs. Maschine'''
+        starter_choice = self.choose_starter()
+        if starter_choice == "1":
+            self.player1 = Player(name=input("Name: "), number=1) 
+            self.player2 = self.choose_bot(bot_number=2)
+            self.game_loop()
+        else:
+            self.player1 = self.choose_bot(bot_number=1)
+            self.player2 = Player(name=input("Name: "), number=2)
+            self.game_loop()
         
     def game_loop(self):        
         '''Startet die Partie
@@ -123,7 +104,8 @@ class Game:
         Board wird angezeigt, Spieler setzt Stein, Board prüft auf Gewinner und volles Spielfeld.
         Wenn Gewinner feststeht oder Spielfeld voll ist, wird das Board angezeigt und das Spiel beendet.
         Andernfalls zieht der nächste Spieler.
-        '''                              
+        '''   
+        self.print_einleitung()                           
         print("Lasset die Spiele beginnen!")                 
         winner = False                                       
         full_board = False                                    
@@ -156,9 +138,6 @@ class Game:
                 self.board.display()
                 break                                         
         print("\nDas Spiel ist vorbei.")                               
-
-game1=Game()
-game1.start()
 
 def game_sim(number):
     '''Simuliert Spiele zwischen Bots
@@ -203,4 +182,7 @@ def game_sim(number):
     print(f"Bot 1: {count_bot_1}\nBot 2: {count_bot_2}\nDraw: {count_draw}")
 
 
-#game_sim(100)
+if __name__ == "__main__":
+    game=Game()
+    game.start()
+
