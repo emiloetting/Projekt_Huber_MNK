@@ -1,4 +1,6 @@
 from Board import Board
+
+
 class Player():
     def __init__(self, name, number):
         self.name = name            
