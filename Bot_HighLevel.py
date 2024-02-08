@@ -50,7 +50,7 @@ class Bot_HighLevel(Player):
             y_coordinate = self.moves_to_get_2_in_a_row[random_number][0]
             x_coordinate = self.moves_to_get_2_in_a_row[random_number][1]
                                                                                              
-        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate} \n")
+        print(f"Bot setzt hier (evtl.) random: {x_coordinate, y_coordinate} \n")
         board.set_field_value(y_coordinate, x_coordinate, self.number)                       
         return board.array                                                                          
     
@@ -77,7 +77,7 @@ class Bot_HighLevel(Player):
         elif self.gefilterte_liste == [] and self.important_moves == [] and self.winning_moves == []: 
             #wenn lediglich strategische unwichtigere Züge möglich sind:
             random_number = randint(0, len(self.possible_moves) - 1)
-            print(f"Bot setzt hier: ({self.possible_moves[random_number][0]+1, 5-self.possible_moves[random_number][1]}) \n")
+            print(f"Bot setzt hier: ({abs((5-self.possible_moves[random_number][1])-6), abs((self.possible_moves[random_number][0]+1)-6)}) \n")
             board.set_field_value(self.possible_moves[random_number][0], self.possible_moves[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -87,7 +87,7 @@ class Bot_HighLevel(Player):
         elif self.important_moves == [] and self.winning_moves == []:
             #wenn strategisch sinnvollere, aber keine wichtigen Züge möglich sind:
             random_number = randint(0, len(self.gefilterte_liste) - 1)
-            print(f"Bot setzt hier: ({self.gefilterte_liste[random_number][0]+1, 5-self.gefilterte_liste[random_number][1]}) \n")
+            print(f"Bot setzt hier: ({abs((5-self.gefilterte_liste[random_number][1])-6), abs((self.gefilterte_liste[random_number][0]+1)-6)}) \n")
             board.set_field_value(self.gefilterte_liste[random_number][0], self.gefilterte_liste[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -97,7 +97,7 @@ class Bot_HighLevel(Player):
         elif self.winning_moves == []:
             #wenn wichtige Züge möglich sind:
             random_number = randint(0, len(self.important_moves) - 1)
-            print(f"Bot setzt hier: ({self.important_moves[random_number][0]+1, 5-self.important_moves[random_number][1]})\n")
+            print(f"Bot setzt hier: ({abs((5-self.important_moves[random_number][1])-6), abs((self.important_moves[random_number][0]+1)-6)})\n")
             board.set_field_value(self.important_moves[random_number][0], self.important_moves[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -107,7 +107,7 @@ class Bot_HighLevel(Player):
         else:
             #wenn gewinnbringende/verhindernde Züge möglich/nötig sind:
             random_number = randint(0, len(self.winning_moves) - 1)
-            print(f"Bot setzt hier: ({self.winning_moves[random_number][0]+1, 5-self.winning_moves[random_number][1]}) \n")
+            print(f"Bot setzt hier: ({abs((5-self.winning_moves[random_number][1])-6), abs((self.winning_moves[random_number][0]+1)-6)}) \n")
             board.set_field_value(self.winning_moves[random_number][0], self.winning_moves[random_number][1], self.number)  
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -166,7 +166,7 @@ class Bot_HighLevel(Player):
                         self.winning_moves.append((row_index, element-1, "h"))
 
                 #Wenn in Mitte der Reihe leeres Feld, links und rechts von der selben Zahl belegt und Felder am Rand leer:
-                if row[2] == 0 and row[1] == row [3] and row[1] != 0 and row[0] == row[4] == 0:
+                if row[2] == 0 and row[1] == row [3] and row[1] != 0 and (row[0] == 0 or row[4] == 0):
                     self.important_moves.append((row_index, 2, "h"))
 
                 #Wenn Feld belegt (links bis mitte):
@@ -219,7 +219,7 @@ class Bot_HighLevel(Player):
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element-1] == 0:
                         self.winning_moves.append((element-1, 4-row_index, "v"))
                 
-                if row[2] == 0 and row[1] == row[3] and row[1] != 0 and row[0] == row[4] == 0:
+                if row[2] == 0 and row[1] == row[3] and row[1] != 0 and (row[0] == 0 or row[4] == 0):
                     self.important_moves.append((2, 4-row_index, "v"))
 
                 if row[element] != 0 and element < 3:   
