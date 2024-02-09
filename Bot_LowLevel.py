@@ -10,7 +10,7 @@ class Bot_LowLevel(Player):
 
     def __init__(self, number):
         self.number = number
-        self.name = "MyBot2"
+        self.name = "Der Bot"
         self.winning_moves_bot2 = []
 
     def bot2_make_random_move(self, board):          
@@ -36,7 +36,8 @@ class Bot_LowLevel(Player):
                     y_coordinate = tupel[0]
                     x_coordinate = tupel[1]
                                                                                              #andere zufällige y-Koordinate wird generiert
-        print(f"Bot setzt random hier: {x_coordinate + 1, 5 - y_coordinate}")
+        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate}")
+     
         board.set_field_value(y_coordinate, x_coordinate, self.number)                       #methode def. in Board-Klasse, markiert Spielzug auf dem Spielbrett
         return board.array         
 
@@ -53,8 +54,7 @@ class Bot_LowLevel(Player):
             return board.array
         else:
             random_number = randint(0, len(self.winning_moves_bot2) - 1)
-            print(f"mögliche Züge in Array-Index-Form in possible_moves: {self.winning_moves_bot2}")
-            print(f"Bot setzt hier: ({self.winning_moves_bot2[random_number][0], self.winning_moves_bot2[random_number][1]})")
+            print(f"Bot setzt hier: {abs((5-self.winning_moves[random_number][1])-6), abs((self.winning_moves[random_number][0]+1)-6)} \n")
             board.set_field_value(self.winning_moves_bot2[random_number][0], self.winning_moves_bot2[random_number][1], self.number)
             self.winning_moves_bot2 = []
             return board.array

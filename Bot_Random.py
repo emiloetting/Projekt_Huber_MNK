@@ -9,7 +9,7 @@ class Bot_Random(Player):
     '''Bot, der nur random Züge spielen kann'''
     def __init__(self, number):
         self.number = number 
-        self.name = "RandomBot"       
+        self.name = "Der Bot"       
 
     def make_move(self, board = Board):  
         '''Ermöglicht dem Bot das Setzen seiner Markierung auf dem Spielfeld-Array.
@@ -21,7 +21,8 @@ class Bot_Random(Player):
         y_coordinate = randint(0,4)                                         
         while board.array[y_coordinate][x_coordinate] != 0:                 #wenn Feld belegt
             x_coordinate = randint(0,4)                                    
-            y_coordinate = randint(0,4)                                     
+            y_coordinate = randint(0,4)               
 
+        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate}")
         board.set_field_value(y_coordinate, x_coordinate, self.number)      #methode def. in Board-Klasse, markiert Spielzug auf dem Spielbrett
         return board.array                                                  

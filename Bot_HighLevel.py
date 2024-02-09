@@ -11,7 +11,7 @@ class Bot_HighLevel(Player):
         Eigenschaften umfassen Spielernummer sowie Listen für mögliche Züge, wichtige Züge und gewinnbringende Züge
         '''                                       
         self.number = number
-        self.name = "Bot_HighLevel"                                                
+        self.name = "Der Bot"                                                
         self.possible_moves = []
         self.gefilterte_liste = []
         self.important_moves = []
@@ -50,7 +50,8 @@ class Bot_HighLevel(Player):
             y_coordinate = self.moves_to_get_2_in_a_row[random_number][0]
             x_coordinate = self.moves_to_get_2_in_a_row[random_number][1]
                                                                                              
-        print(f"Bot setzt hier (evtl.) random: {x_coordinate, y_coordinate} \n")
+        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate}")
+
         board.set_field_value(y_coordinate, x_coordinate, self.number)                       
         return board.array                                                                          
     
@@ -77,7 +78,7 @@ class Bot_HighLevel(Player):
         elif self.gefilterte_liste == [] and self.important_moves == [] and self.winning_moves == []: 
             #wenn lediglich strategische unwichtigere Züge möglich sind:
             random_number = randint(0, len(self.possible_moves) - 1)
-            print(f"Bot setzt hier: ({abs((5-self.possible_moves[random_number][1])-6), abs((self.possible_moves[random_number][0]+1)-6)}) \n")
+            print(f"Bot setzt hier: {abs((5-self.possible_moves[random_number][1])-6), abs((self.possible_moves[random_number][0]+1)-6)} \n")
             board.set_field_value(self.possible_moves[random_number][0], self.possible_moves[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -87,7 +88,7 @@ class Bot_HighLevel(Player):
         elif self.important_moves == [] and self.winning_moves == []:
             #wenn strategisch sinnvollere, aber keine wichtigen Züge möglich sind:
             random_number = randint(0, len(self.gefilterte_liste) - 1)
-            print(f"Bot setzt hier: ({abs((5-self.gefilterte_liste[random_number][1])-6), abs((self.gefilterte_liste[random_number][0]+1)-6)}) \n")
+            print(f"Bot setzt hier: {abs((5-self.gefilterte_liste[random_number][1])-6), abs((self.gefilterte_liste[random_number][0]+1)-6)} \n")
             board.set_field_value(self.gefilterte_liste[random_number][0], self.gefilterte_liste[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -97,7 +98,7 @@ class Bot_HighLevel(Player):
         elif self.winning_moves == []:
             #wenn wichtige Züge möglich sind:
             random_number = randint(0, len(self.important_moves) - 1)
-            print(f"Bot setzt hier: ({abs((5-self.important_moves[random_number][1])-6), abs((self.important_moves[random_number][0]+1)-6)})\n")
+            print(f"Bot setzt hier: {abs((5-self.important_moves[random_number][1])-6), abs((self.important_moves[random_number][0]+1)-6)}\n")
             board.set_field_value(self.important_moves[random_number][0], self.important_moves[random_number][1], self.number)
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -107,7 +108,7 @@ class Bot_HighLevel(Player):
         else:
             #wenn gewinnbringende/verhindernde Züge möglich/nötig sind:
             random_number = randint(0, len(self.winning_moves) - 1)
-            print(f"Bot setzt hier: ({abs((5-self.winning_moves[random_number][1])-6), abs((self.winning_moves[random_number][0]+1)-6)}) \n")
+            print(f"Bot setzt hier: {abs((5-self.winning_moves[random_number][1])-6), abs((self.winning_moves[random_number][0]+1)-6)} \n")
             board.set_field_value(self.winning_moves[random_number][0], self.winning_moves[random_number][1], self.number)  
             self.possible_moves = []
             self.gefilterte_liste = []
@@ -159,43 +160,43 @@ class Bot_HighLevel(Player):
                 #Wenn eigene Dreierkette und links oder rechts leer:
                 if element == 0 or element == 1:
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element+3] == 0:
-                        self.winning_moves.append((row_index, element+3, "h"))
+                        self.winning_moves.append((row_index, element+3))
 
                 if element == 2 or element == 1:
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element-1] == 0:
-                        self.winning_moves.append((row_index, element-1, "h"))
+                        self.winning_moves.append((row_index, element-1))
 
                 #Wenn in Mitte der Reihe leeres Feld, links und rechts von der selben Zahl belegt und Felder am Rand leer:
                 if row[2] == 0 and row[1] == row [3] and row[1] != 0 and (row[0] == 0 or row[4] == 0):
-                    self.important_moves.append((row_index, 2, "h"))
+                    self.important_moves.append((row_index, 2))
 
                 #Wenn Feld belegt (links bis mitte):
                 if row[element] != 0 and element < 3:
                     #wenn Dreierkette (spielerunabhängig):   
                     if row[element] == row[element + 1] == row[element + 2]:
                         if element == 2 and row[element-1] == 0:
-                            self.important_moves.append((row_index, element - 1,"h"))
+                            self.important_moves.append((row_index, element - 1))
                         elif element == 1 and row[element+3] == 0:
-                            self.important_moves.append((row_index, element + 3,"h"))
+                            self.important_moves.append((row_index, element + 3))
                         elif element == 1 and row[element-1] == 0:
-                            self.important_moves.append((row_index, element - 1,"h"))
+                            self.important_moves.append((row_index, element - 1))
                         elif element == 0 and row[element+3] == 0:
-                            self.important_moves.append((row_index, element + 3,"h")) 
+                            self.important_moves.append((row_index, element + 3)) 
 
                     #andernfalls: Prüfen auf Zweierketten und Lücken die zu Dreierkette führen: 
                     elif row[element] == row[element + 1] and row[element + 2] == 0:     
-                        self.possible_moves.append((row_index, element + 2,"h"))
+                        self.possible_moves.append((row_index, element + 2))
                     elif row[element] == row[element + 1] and row[element - 1] == 0 and element > 0:    
-                        self.possible_moves.append((row_index, element - 1,"h"))
+                        self.possible_moves.append((row_index, element - 1))
                     elif row[element] == row[element + 2] and row[element + 1] == 0:  
-                        self.possible_moves.append((row_index, element+1,"h"))
+                        self.possible_moves.append((row_index, element+1))
                     else:
                         pass
                 
                 #wenn Feld belegt (rechts):
                 elif row[element] != 0 and element <= 4: 
                     if row[element] == row[element-1] and row[element-2] == 0: 
-                            self.possible_moves.append((row_index, element-2,"h"))
+                            self.possible_moves.append((row_index, element-2))
                     else:
                         pass
                 else:
@@ -213,36 +214,36 @@ class Bot_HighLevel(Player):
             for element in range(len(row)):              
                 if element == 0 or element == 1:
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element+3] == 0:
-                        self.winning_moves.append((element+3, 4-row_index, "v"))
+                        self.winning_moves.append((element+3, 4-row_index))
 
                 if element == 2 or element == 1:
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element-1] == 0:
-                        self.winning_moves.append((element-1, 4-row_index, "v"))
+                        self.winning_moves.append((element-1, 4-row_index))
                 
                 if row[2] == 0 and row[1] == row[3] and row[1] != 0 and (row[0] == 0 or row[4] == 0):
-                    self.important_moves.append((2, 4-row_index, "v"))
+                    self.important_moves.append((2, 4-row_index))
 
                 if row[element] != 0 and element < 3:   
                     if row[element] == row[element + 1] == row[element + 2]:            
                         if element == 2 and row[element-1] == 0:
-                            self.important_moves.append((element-1, 4-row_index,"v"))
+                            self.important_moves.append((element-1, 4-row_index))
                         elif element == 1 and row[element+3] == 0:
-                            self.important_moves.append((element + 3, 4-row_index,"v"))
+                            self.important_moves.append((element + 3, 4-row_index))
                         elif element == 1 and row[element-1] == 0:
-                            self.important_moves.append((element - 1, 4-row_index,"v"))
+                            self.important_moves.append((element - 1, 4-row_index))
 
                     elif row[element] == row[element + 1] and row[element + 2] == 0:     
-                        self.possible_moves.append((element + 2, 4-row_index,"v"))
+                        self.possible_moves.append((element + 2, 4-row_index))
                     elif row[element] == row[element + 1] and row[element - 1] == 0 and element > 0:    
-                        self.possible_moves.append((element - 1, 4-row_index,"v"))
+                        self.possible_moves.append((element - 1, 4-row_index))
                     elif row[element] == row[element + 2] and row[element + 1] == 0:
-                        self.possible_moves.append((element+1, 4-row_index,"v"))
+                        self.possible_moves.append((element+1, 4-row_index))
                     else:
                         pass
 
                 elif row[element] != 0 and element <= 4:
                     if row[element] == row[element - 1] and row[element - 2] == 0: 
-                        self.possible_moves.append((element - 2, 4-row_index,"v"))
+                        self.possible_moves.append((element - 2, 4-row_index))
                     else:
                         pass
                 else:
@@ -257,7 +258,7 @@ class Bot_HighLevel(Player):
         -Zweierkette mit leerem Feld links oder rechts
         '''
         diag_1_main = list(board.array.diagonal())                                               
-        diag_2_above_main = list(board.array.diagonal(offset=1) )                                         
+        diag_2_above_main = list(board.array.diagonal(offset=1))                                         
         diag_3_under_main = list(board.array.diagonal(offset=-1))                                         
 
         flipped_board = np.fliplr(board.array)                                                    
@@ -274,44 +275,44 @@ class Bot_HighLevel(Player):
             #...eigene Dreierketten     
             if element == 0 or element == 1:
                 if diag_1_main[element] == diag_1_main[element+1] == diag_1_main[element+2] == self.number and diag_1_main[element+3] == 0:
-                    self.winning_moves.append((element+3, element+3, "md"))
+                    self.winning_moves.append((element+3, element+3))
             if element == 2 or element == 1:
                 if diag_1_main[element] == diag_1_main[element+1] == diag_1_main[element+2] == self.number and diag_1_main[element-1] == 0:
-                    self.winning_moves.append((element-1, element-1, "md"))
+                    self.winning_moves.append((element-1, element-1))
             
             #...potentielle Dreierketten die Sieg bringen
             if diag_1_main[2] == 0 == diag_1_main[0] == diag_1_main[4] and diag_1_main[1] == diag_1_main[3] and diag_1_main[2] != 0:
-                self.important_moves.append((2,2, "md"))
+                self.important_moves.append((2,2))
 
             if diag_1_main[element] != 0 and element < 3:
                 if diag_1_main[element] == diag_1_main[element + 1] == diag_1_main[element + 2]:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if element == 2 and diag_1_main[element-1] == 0:
-                        self.important_moves.append((element-1, element-1,"md"))
+                        self.important_moves.append((element-1, element-1))
                     elif element == 1 and diag_1_main[element+3] == 0:
-                        self.important_moves.append((element + 3, element + 3,"md"))
+                        self.important_moves.append((element + 3, element + 3))
                     elif element == 1 and diag_1_main[element-1] == 0:
-                        self.important_moves.append((element - 1, element - 1,"md"))
+                        self.important_moves.append((element - 1, element - 1))
                     elif element == 0 or element == 1:
                         if diag_1_main[element+3] == 0:
-                            self.important_moves.append((element + 3, element + 3,"md"))
+                            self.important_moves.append((element + 3, element + 3))
                 
                 #...Zweierketten mit links/rechts leer
                 elif diag_1_main[element] == diag_1_main[(element+1)] and diag_1_main[(element+2)] == 0:
-                    self.possible_moves.append((element+2, element+2,"md"))
+                    self.possible_moves.append((element+2, element+2))
                 elif diag_1_main[element] == diag_1_main[element + 1] and diag_1_main[element - 1] == 0 and element > 0: 
-                    self.possible_moves.append((element-1, element-1,"md"))
+                    self.possible_moves.append((element-1, element-1))
                 
                 #...Mitte leer, links/rechts von selbem Spieler belegt
                 elif diag_1_main[element] == diag_1_main[element + 2] and diag_1_main[element+1] == 0:
-                    self.possible_moves.append((element+1, element+1,"md"))
+                    self.possible_moves.append((element+1, element+1))
                 else:
                     pass
 
             elif diag_1_main[element] != 0 and element <= 4:
                 #...Zweierketten mit links leer
                 if diag_1_main[element] == diag_1_main[element - 1] and diag_1_main[element - 2] == 0:
-                    self.possible_moves.append((element-2, element-2,"md"))
+                    self.possible_moves.append((element-2, element-2))
                 else:
                     pass
             else:
@@ -322,11 +323,11 @@ class Bot_HighLevel(Player):
             if element == 0 or element == 1:
                 #...eigene Dreierketten
                 if diag_flipped_main[element] == diag_flipped_under_main[element+1] == diag_flipped_main[element+2] == self.number and diag_flipped_main[element+3] == 0:
-                    self.winning_moves.append((element+3, 4-(element+3), "fmd"))
+                    self.winning_moves.append((element+3, 4-(element+3)))
 
             if element == 2 or element == 1:
                 if diag_flipped_main[element] == diag_flipped_under_main[element+1] == diag_flipped_main[element+2] == self.number and diag_flipped_main[element-1] == 0:
-                    self.winning_moves.append((element-1, 4-(element-1), "fmd"))
+                    self.winning_moves.append((element-1, 4-(element-1)))
             
             #...potentielle Dreierketten die Sieg bringen
             if diag_flipped_main[2] == 0 == diag_flipped_main[0] == diag_flipped_main[4] and diag_flipped_main[1] == diag_flipped_main[3] and diag_flipped_main[2] != 0:
@@ -336,31 +337,31 @@ class Bot_HighLevel(Player):
                 if diag_flipped_main[element] == diag_flipped_main[element + 1] == diag_flipped_main[element + 2]:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if element == 2 and diag_flipped_main[element-1] == 0:
-                        self.important_moves.append((element-1, 4-(element-1),"fmd"))
+                        self.important_moves.append((element-1, 4-(element-1)))
                     elif element == 1 and diag_flipped_main[element+3] == 0:
-                        self.important_moves.append((element+3, 4-(element+3), "fmd"))
+                        self.important_moves.append((element+3, 4-(element+3)))
                     elif element == 1 and diag_flipped_main[element-1] == 0:
-                        self.important_moves.append((element-1, 4-(element-1), "fmd"))
+                        self.important_moves.append((element-1, 4-(element-1)))
                     elif element == 0 or element == 1:
                         if diag_flipped_main[element+3] == 0:
-                            self.important_moves.append((element+3, 4-(element+3), "fmd"))
+                            self.important_moves.append((element+3, 4-(element+3)))
                 
                 #...Zweierketten mit links/rechts leer
                 elif diag_flipped_main[element] == diag_flipped_main[(element+1)] and diag_flipped_main[(element+2)] == 0:
-                    self.possible_moves.append((element+2, 4-(element+2), "fmd"))
+                    self.possible_moves.append((element+2, 4-(element+2)))
                 elif diag_flipped_main[element] == diag_flipped_main[element + 1] and diag_flipped_main[element - 1] == 0 and element > 0: 
-                    self.possible_moves.append((element-1, 4-(element-1), "fmd"))
+                    self.possible_moves.append((element-1, 4-(element-1)))
 
                 #...Mitte leer, links/rechts von selbem Spieler belegt
                 elif diag_flipped_main[element] == diag_flipped_main[element+2] and diag_flipped_main[element+1] == 0:
-                    self.possible_moves.append((element+1, 4-(element+1), "fmd"))
+                    self.possible_moves.append((element+1, 4-(element+1)))
                 else:
                     pass
 
             #...Zweierketten mit links leer
             elif diag_flipped_main[element] != 0 and element <= 4:
                 if diag_flipped_main[element] == diag_flipped_main[element - 1] and diag_flipped_main[element - 2] == 0:
-                    self.possible_moves.append((element-2, 4-(element-2), "fmd"))
+                    self.possible_moves.append((element-2, 4-(element-2)))
                 else:
                     pass
             else:
@@ -371,30 +372,30 @@ class Bot_HighLevel(Player):
             #...eigene Dreierketten
             if element == 0:
                 if diag_2_above_main[element] == diag_2_above_main[element+1] == diag_2_above_main[element+2] == self.number and diag_2_above_main[element+3] == 0:
-                    self.winning_moves.append((element+3, 1+element+3, "amd"))
+                    self.winning_moves.append((element+3, 1+element+3))
             elif element == 1:
                 if diag_2_above_main[element] == diag_2_above_main[element+1] == diag_2_above_main[element+2] == self.number and diag_2_above_main[element-1] == 0:
-                    self.winning_moves.append((element-1, 1+(element-1), "amd"))
+                    self.winning_moves.append((element-1, 1+(element-1)))
 
 
             if diag_2_above_main[element] != 0:
                 if element < 2:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if diag_2_above_main[element] == diag_2_above_main[element+1] == diag_2_above_main[element+2] and element ==0 and diag_2_above_main[element+3] == 0:
-                        self.important_moves.append((element+3, 1+element+3, "amd"))
+                        self.important_moves.append((element+3, 1+element+3))
                     elif diag_2_above_main[element] == diag_2_above_main[element+1] == diag_2_above_main[element+2] and element==1 and diag_2_above_main[element-1] == 0:
-                        self.important_moves.append((element-1, 1+element-1, "amd"))
+                        self.important_moves.append((element-1, 1+element-1))
 
                     #Zweierkette des Gegners mit rechts leer
                     elif self.number not in diag_3_under_main:
                         if diag_2_above_main[element] == diag_2_above_main[element+1] and diag_2_above_main[element+2] == 0:
-                            self.possible_moves.append((element+2, 1+element+2, "amd"))
+                            self.possible_moves.append((element+2, 1+element+2))
 
                 elif element == 2: 
                     #Zweierkette des Gegners mit links leer
                     if self.number not in diag_3_under_main:
                         if diag_2_above_main[element] == diag_2_above_main[element+1] and diag_2_above_main[element-1] == 0:
-                            self.possible_moves.append((element-1, (1+element-1), "amd"))
+                            self.possible_moves.append((element-1, (1+element-1)))
             else:
                 pass
         
@@ -403,28 +404,28 @@ class Bot_HighLevel(Player):
                 #...eigene Dreierketten
                 if element == 0:
                     if diag_3_under_main[element] == diag_3_under_main[element+1] == diag_3_under_main[element+2] == self.number and diag_3_under_main[element+3] == 0:
-                        self.important_moves.append((1+element+3, element+3, "umd"))
+                        self.important_moves.append((1+element+3, element+3))
 
                 elif element == 1:
                     if diag_3_under_main[element] == diag_3_under_main[element+1] == diag_3_under_main[element+2] == self.number and diag_3_under_main[element-1] == 0:
-                       self.important_moves.append((1+(element-1), element-1, "umd")) 
+                       self.important_moves.append((1+(element-1), element-1)) 
 
                 if element < 2:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if diag_3_under_main[element] == diag_3_under_main[element+1] == diag_3_under_main[element+2] and element ==0 and diag_3_under_main[element+3] == 0:
-                        self.important_moves.append((1+element+3, element+3, "umd"))
+                        self.important_moves.append((1+element+3, element+3))
                     elif diag_3_under_main[element] == diag_3_under_main[element+1] == diag_3_under_main[element+2] and element==1 and diag_3_under_main[element-1] == 0:
-                        self.important_moves.append((1+element-1, element-1, "umd"))
+                        self.important_moves.append((1+element-1, element-1))
                     
                     #Zweierkette des Gegners mit rechts leer
                     elif self.number not in diag_3_under_main:
                         if diag_3_under_main[element] == diag_3_under_main[element+1] and diag_3_under_main[element+2] == 0:
-                            self.possible_moves.append((1+element+2, element+2, "umd"))
+                            self.possible_moves.append((1+element+2, element+2))
                 elif element == 2: 
                     if self.number not in diag_3_under_main:
                         #Zweierkette des Gegners mit links leer
                         if diag_3_under_main[element] == diag_3_under_main[element+1] and diag_3_under_main[element-1] == 0:
-                            self.possible_moves.append((1+element-1, element-1, "umd"))
+                            self.possible_moves.append((1+element-1, element-1))
                     
             else:
                 pass
@@ -434,29 +435,29 @@ class Bot_HighLevel(Player):
                 if element == 0:
                     #...eigene Dreierketten
                     if diag_flipped_above_main[element] == diag_flipped_above_main[element+1] == diag_flipped_above_main[element+2] == self.number and diag_flipped_above_main[element+3] == 0:
-                        self.winning_moves.append((element+3, 3-(element+3), "afmd"))
+                        self.winning_moves.append((element+3, 3-(element+3)))
 
                 elif element == 1:
                     if diag_flipped_above_main[element] == diag_flipped_above_main[element+1] == diag_flipped_above_main[element+2] == self.number and diag_flipped_above_main[element-1] == 0:
-                        self.winning_moves.append((element-1, 3-(element-1), "afmd"))
+                        self.winning_moves.append((element-1, 3-(element-1)))
 
                 if element < 2:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if diag_flipped_above_main[element] == diag_flipped_above_main[element+1] == diag_flipped_above_main[element+2] and element ==0 and diag_flipped_above_main[element+3] == 0:
-                        self.important_moves.append((element+3, 3 - (element+3),"afmd"))
+                        self.important_moves.append((element+3, 3 - (element+3)))
                     elif diag_flipped_above_main[element] == diag_flipped_above_main[element+1] == diag_flipped_above_main[element+2] and element==1 and diag_flipped_above_main[element-1] == 0:
-                        self.important_moves.append((element-1, 3 - (element-1),"afmd"))   
+                        self.important_moves.append((element-1, 3 - (element-1)))   
 
                     #Zweierkette des Gegners mit rechts leer                                                                                                                     
                     elif self.number not in diag_flipped_above_main:
                         if diag_flipped_above_main[element] == diag_flipped_above_main[element+1] and diag_flipped_above_main[element+2] == 0:
-                            self.possible_moves.append((element+2, 3 - (element+2), "afmd"))
+                            self.possible_moves.append((element+2, 3 - (element+2)))
 
                 elif element == 2: 
                     if self.number not in diag_flipped_above_main:
                         #Zweierkette des Gegners mit links leer
                         if diag_flipped_above_main[element] == diag_flipped_above_main[element+1] and diag_flipped_above_main[element-1] == 0:
-                            self.possible_moves.append((element-1, 2, "afmd"))
+                            self.possible_moves.append((element-1, 2))
             else:
                 pass
         
@@ -465,27 +466,27 @@ class Bot_HighLevel(Player):
                 if element == 0:
                     #...eigene Dreierketten
                     if diag_flipped_under_main[element] == diag_flipped_under_main[element+1] == diag_flipped_under_main[element+2] == self.number and diag_flipped_under_main[element+3] == 0:
-                        self.winning_moves.append((1+element+3, 4 - (element+3),"ufmd"))
+                        self.winning_moves.append((1+element+3, 4 - (element+3)))
 
                 elif element == 1:
                     if diag_flipped_under_main[element] == diag_flipped_under_main[element+1] == diag_flipped_under_main[element+2] == self.number and diag_flipped_under_main[element-1] == 0:
-                        self.winning_moves.append((1+element-1, 4 - (element-1),"ufmd"))
+                        self.winning_moves.append((1+element-1, 4 - (element-1)))
 
                 if element < 2:
                     #...generelle Dreierketten (spielerunabhängig) mit link/rechts leer
                     if diag_flipped_under_main[element] == diag_flipped_under_main[element+1] == diag_flipped_under_main[element+2] and element ==0 and diag_flipped_under_main[element+3] == 0:
-                        self.important_moves.append((1+element+3, 4 - (element+3),"ufmd"))
+                        self.important_moves.append((1+element+3, 4 - (element+3)))
                     elif diag_flipped_under_main[element] == diag_flipped_under_main[element+1] == diag_flipped_under_main[element+2] and element==1 and diag_flipped_under_main[element-1] == 0:
-                        self.important_moves.append((1, 4,"ufmd"))  
+                        self.important_moves.append((1, 4))  
                     elif self.number not in diag_flipped_under_main:
                         #Zweierkette des Gegners mit rechts leer    
                         if diag_flipped_under_main[element] == diag_flipped_under_main[element+1] and diag_flipped_under_main[element+2] == 0:
-                            self.possible_moves.append((1+element+2, 4-(element+2), "ufmd"))
+                            self.possible_moves.append((1+element+2, 4-(element+2)))
                 
                 elif element == 2:   
                     if self.number not in diag_flipped_under_main: 
                         #Zweierkette des Gegners mit rechts leer 
                         if diag_flipped_under_main[element] == diag_flipped_under_main[element+1] and diag_flipped_under_main[element-1] == 0:
-                            self.possible_moves.append((element,element+1,"ufmd"))
+                            self.possible_moves.append((element,element+1))
             else:
                 pass

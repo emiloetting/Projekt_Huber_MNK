@@ -38,6 +38,7 @@ class Game:
         der SPielparameter ausgeführt'''
 
         while True:
+            print()
             print("Willkommen! Wie möchtest du spielen?\nPlayer vs. Player [1] / Player vs. Bot [2]")    
             choice_gamemode = input(">>> ")
             print() 
@@ -52,8 +53,8 @@ class Game:
             
     def start_player_vs_player(self):
         '''Startet das Spiel Player vs. Player'''
-        self.player1 = Player(name=input("Name Spieler 1: "), number=1)                             
-        self.player2 = Player(name=input("Name Spieler 2: "), number=2)                                                                                                                                                
+        self.player1 = Player(name=input("Name Spieler 1: \n>>> "), number=1)                             
+        self.player2 = Player(name=input("Name Spieler 2: \n>>> "), number=2)                                                                                                                                                
         return self.game_loop()
     
     def choose_bot(self, bot_number):
@@ -89,12 +90,14 @@ class Game:
         '''Initialisiert Spiel Mensch vs. Maschine'''
         starter_choice = self.choose_starter()
         if starter_choice == "1":
-            self.player1 = Player(name=input("Name: "), number=1) 
             self.player2 = self.choose_bot(bot_number=2)
+            self.player1 = Player(name=input("Spielername: \n>>> "), number=1)
+            print() 
             self.game_loop()
         else:
             self.player1 = self.choose_bot(bot_number=1)
-            self.player2 = Player(name=input("Name: "), number=2)
+            self.player2 = Player(name=input("Spielername: \n>>> "), number=2)
+            print()
             self.game_loop()
         
     def game_loop(self):        
