@@ -10,7 +10,7 @@ class Game:
         self.m = m                                                                                  
         self.n = n                                                                                  
         self.k = k                                                                                  
-        self.board = Board()                                                                        
+        self.board = Board(m=m, n=n, k=k)                                                                        
         self.player1 = player1                             
         self.player2 = player2                           
         self.winner = None
