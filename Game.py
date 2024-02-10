@@ -13,7 +13,8 @@ class Game:
         self.board = Board()                                                                        
         self.player1 = player1                             
         self.player2 = player2                           
-    
+        self.winner = None
+        
     def print_einleitung(self):
         print(
             " \n",
@@ -146,40 +147,21 @@ def game_sim(number):
     '''Simuliert Spiele zwischen Bots
     
     Simuliert eine bestimmte Anzahl an Spielen zwischen zwei Bots.
-    Die Anzahl der Spiele wird als Parameter übergeben.
-    Die Ergebnisse werden in eine CSV-Datei geschrieben.
+    Gibt die Ergebnisse als print-statement im Terminal aus.
     '''
-    with open("game_sim.csv", "w") as doc_file:
-        doc_file.write("MyBotRandom vs. MyBotReactive\nStarter: MyBotRandom\n\n")
     
-    winner = []
     count_bot_1 = 0
     count_bot_2 = 0
     count_draw = 0
     for i in range(number):
         game=Game(player1=Bot_Random(number=1), player2=Bot_HighLevel(number=2))
         game.game_loop()
-        if game.board.has_won_diagonally() or game.board.has_won_horizontally() or game.board.has_won_vertically():
-            winner.append(game.board.winner)
+        if game.winner == game.player1:
+            count_bot_1 += 1
+        elif game.winner == game.player2:
+            count_bot_2 += 1
         elif game.board.board_full():
-            winner.append(None)    
-    
-    for i in winner:
-        if i == 1:
-            count_bot_1 += 1
-            doc_file.write("Bot 1\n")
-        elif i == 2:
-            count_bot_2 += 1
-            doc_file.write("Bot 2\n")
-        elif i == {1}:
-            count_bot_1 += 1
-            doc_file.write("Bot 1\n")
-        elif i == {2}:
-            count_bot_2 += 1
-            doc_file.write("Bot 2\n")
-        elif i == None:
             count_draw += 1
-            doc_file.write("Draw\n")
 
     print("\nSieger:")
     print(f"Bot 1: {count_bot_1}\nBot 2: {count_bot_2}\nDraw: {count_draw}")
