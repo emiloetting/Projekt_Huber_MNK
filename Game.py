@@ -119,7 +119,8 @@ class Game:
             self.player1.make_move(board=self.board)          
             winner = self.board.has_won()                   
             full_board = self.board.board_full()
-            if winner == True:                               
+            if winner == True:    
+                self.winner = self.player1                           
                 self.board.display()
                 print(f"\n {self.player1.name} hat gewonnen!")
                 break                                         
@@ -133,7 +134,8 @@ class Game:
             self.player2.make_move(board=self.board)          
             winner = self.board.has_won()                    
             full_board = self.board.board_full()
-            if winner == True:                               
+            if winner == True:        
+                self.winner = self.player2                  
                 self.board.display()               
                 print(f"\n {self.player2.name} hat gewonnen!")
                 break                                        
@@ -168,6 +170,7 @@ def game_sim(number):
 
 
 if __name__ == "__main__":
-    game=Game()
+    game = Game()
     game.start()
+    #game_sim(100)
 
