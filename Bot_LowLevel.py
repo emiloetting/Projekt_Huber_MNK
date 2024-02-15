@@ -13,6 +13,8 @@ class Bot_LowLevel(Player):
         self.name = "Der Bot"
         self.winning_moves_bot2 = []
 
+
+
     def bot2_make_random_move(self, board):          
         '''Prüft auf sonnvolle, random Züge
         
@@ -40,6 +42,8 @@ class Bot_LowLevel(Player):
      
         board.set_field_value(y_coordinate, x_coordinate, self.number)                       #methode def. in Board-Klasse, markiert Spielzug auf dem Spielbrett
         return board.array         
+    
+
 
     def make_move(self, board):
         '''Bot prüft horizontal und vertikal auf eigene Gewinnmöglichkeit und setzt entsprechend
@@ -58,6 +62,8 @@ class Bot_LowLevel(Player):
             board.set_field_value(self.winning_moves_bot2[random_number][0], self.winning_moves_bot2[random_number][1], self.number)
             self.winning_moves_bot2 = []
             return board.array
+        
+
 
     def check_horizontally(self, board):     
         '''Überprüft, ob horizontal auf dem Spielfeld 3 eigene Steine in einer Reihe sind
@@ -77,6 +83,8 @@ class Bot_LowLevel(Player):
                 if element == 2 or element == 1:
                     if row[element] == row[element+1] == row[element+2] == self.number and row[element-1] == 0:
                         self.winning_moves_bot2.append((row_index, element-1))    
+
+                        
 
 
     def check_vertically(self, board):     

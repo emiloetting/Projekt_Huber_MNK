@@ -18,42 +18,6 @@ class Bot_HighLevel(Player):
         self.winning_moves = []
         self.moves_to_get_2_in_a_row = []
                                                                     
-    def make_random_move_or_get_two_in_row(self, board):  
-        '''Methode, die einen zufälligen Zug macht, wenn es keine wichtigen oder gewinnbringenden Züge gibt.
-        
-        Überprüft, ob Bot eine Zweierkette bilden kann. 
-        Falls ja, wird ein zufälliger Zug aus dieser Liste gemacht, 
-        der möglichst nicht am Rand des Spielfelds liegt.
-        Falls nicht, prüft er, ob das Feld in der Mitte frei ist. 
-        Wenn ja, wird dort ein Stein gesetzt, wenn nicht wird eine Liste aller freien Felder erstellt.
-        Bot versucht nach Möglichkeit, nicht am Rand zu setzen.
-        '''
-        if self.moves_to_get_2_in_a_row == []:  
-            #wenn keine Zweierkette möglich:                                  
-            if board.array[2][2] == 0:
-                y_coordinate = 2
-                x_coordinate = 2   
-            else:                     
-                all_possible_moves = list(np.argwhere(board.array == 0))    
-                shuffle(all_possible_moves)     
-                for tupel in all_possible_moves:  
-                    if 0 not in tupel and 4 not in tupel:
-                        y_coordinate = tupel[0]
-                        x_coordinate = tupel[1]
-                        break
-                    else:
-                        y_coordinate = tupel[0]
-                        x_coordinate = tupel[1]
-        else:
-            #wenn Bildung einer Zweierkette möglich:
-            random_number = randint(0, len(self.moves_to_get_2_in_a_row) - 1)
-            y_coordinate = self.moves_to_get_2_in_a_row[random_number][0]
-            x_coordinate = self.moves_to_get_2_in_a_row[random_number][1]
-                                                                                             
-        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate}")
-
-        board.set_field_value(y_coordinate, x_coordinate, self.number)                       
-        return board.array                                                                          
     
     def make_move(self, board):
         '''Methode, die den Bot einen Zug machen lässt.
@@ -116,6 +80,45 @@ class Bot_HighLevel(Player):
             self.winning_moves = []
             return board.array
         
+        
+    def make_random_move_or_get_two_in_row(self, board):  
+        '''Methode, die einen zufälligen Zug macht, wenn es keine wichtigen oder gewinnbringenden Züge gibt.
+        
+        Überprüft, ob Bot eine Zweierkette bilden kann. 
+        Falls ja, wird ein zufälliger Zug aus dieser Liste gemacht, 
+        der möglichst nicht am Rand des Spielfelds liegt.
+        Falls nicht, prüft er, ob das Feld in der Mitte frei ist. 
+        Wenn ja, wird dort ein Stein gesetzt, wenn nicht wird eine Liste aller freien Felder erstellt.
+        Bot versucht nach Möglichkeit, nicht am Rand zu setzen.
+        '''
+        if self.moves_to_get_2_in_a_row == []:  
+            #wenn keine Zweierkette möglich:                                  
+            if board.array[2][2] == 0:
+                y_coordinate = 2
+                x_coordinate = 2   
+            else:                     
+                all_possible_moves = list(np.argwhere(board.array == 0))    
+                shuffle(all_possible_moves)     
+                for tupel in all_possible_moves:  
+                    if 0 not in tupel and 4 not in tupel:
+                        y_coordinate = tupel[0]
+                        x_coordinate = tupel[1]
+                        break
+                    else:
+                        y_coordinate = tupel[0]
+                        x_coordinate = tupel[1]
+        else:
+            #wenn Bildung einer Zweierkette möglich:
+            random_number = randint(0, len(self.moves_to_get_2_in_a_row) - 1)
+            y_coordinate = self.moves_to_get_2_in_a_row[random_number][0]
+            x_coordinate = self.moves_to_get_2_in_a_row[random_number][1]
+                                                                                             
+        print(f"Bot setzt hier: {x_coordinate + 1, 5 - y_coordinate}")
+
+        board.set_field_value(y_coordinate, x_coordinate, self.number)                       
+        return board.array                                                                          
+    
+        
     def check_for_empty_fields_around_own_number(self, board):
         '''Methode, die prüft, ob Felder um die eigene Zahl herum leer sind.
         
@@ -145,6 +148,8 @@ class Bot_HighLevel(Player):
                     # Überprüfe, ob der Wert der umliegenden Position 0 ist
                     if board.array[i, j] == 0:
                         self.moves_to_get_2_in_a_row.append((i, j))
+
+
             
     def check_horizontally(self, board):
         '''Methode, die in Horizontalen nach sinnvollen Zügen sucht.
@@ -201,6 +206,8 @@ class Bot_HighLevel(Player):
                         pass
                 else:
                     pass
+
+
                 
     def check_vertically(self, board):     
         '''Methode, die in Vertikalen nach sinnvollen Zügen sucht.
@@ -248,6 +255,9 @@ class Bot_HighLevel(Player):
                         pass
                 else:
                     pass
+                
+
+
                 
     def check_diagonally(self, board):
         '''Methode, die in den Diagonalen nach sinnvollen Zügen sucht.
